@@ -20,8 +20,8 @@ const TaskList = ({ tasks, setTasks, setEditingTask }) => {
       {tasks.map((task) => (
         <div key={task._id} className="bg-gray-100 p-4 mb-4 rounded shadow">
           <h2 className="font-bold">{task.title}</h2>
-          <p>{task.description}</p>
-          <p className="text-sm text-gray-500">Deadline: {new Date(task.deadline).toLocaleDateString()}</p>
+          <p>{task.author}</p>
+          <p className="text-sm text-gray-500">Price: $ {task.price}</p>
           <div className="mt-2">
             <button
               onClick={() => setEditingTask(task)}

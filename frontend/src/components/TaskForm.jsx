@@ -4,17 +4,17 @@ import axiosInstance from '../axiosConfig';
 
 const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
   const { user } = useAuth();
-  const [formData, setFormData] = useState({ title: '', description: '', deadline: '' });
+  const [formData, setFormData] = useState({ title: '', author: '', price: '' });
 
   useEffect(() => {
     if (editingTask) {
       setFormData({
         title: editingTask.title,
-        description: editingTask.description,
-        deadline: editingTask.deadline,
+        author: editingTask.author,
+        price: editingTask.price,
       });
     } else {
-      setFormData({ title: '', description: '', deadline: '' });
+      setFormData({ title: '', author: '', price: '' });
     }
   }, [editingTask]);
 
@@ -33,15 +33,15 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
         setTasks([...tasks, response.data]);
       }
       setEditingTask(null);
-      setFormData({ title: '', description: '', deadline: '' });
+      setFormData({ title: '', author: '', price: '' });
     } catch (error) {
-      alert('Failed to save task.');
+      alert('Failed to save book.');
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="bg-white p-6 shadow-md rounded mb-6">
-      <h1 className="text-2xl font-bold mb-4">{editingTask ? 'Edit Task' : 'Add Task'}</h1>
+      <h1 className="text-2xl font-bold mb-4">{editingTask ? 'Edit Task' : 'Add Book'}</h1>
       <input
         type="text"
         placeholder="Title"
@@ -51,19 +51,20 @@ const TaskForm = ({ tasks, setTasks, editingTask, setEditingTask }) => {
       />
       <input
         type="text"
-        placeholder="Description"
-        value={formData.description}
-        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+        placeholder="Author"
+        value={formData.author}
+        onChange={(e) => setFormData({ ...formData, author: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
       />
       <input
-        type="date"
-        value={formData.deadline}
-        onChange={(e) => setFormData({ ...formData, deadline: e.target.value })}
+        type="text"
+        placeholder="$0"
+        value={formData.price}
+        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
         className="w-full mb-4 p-2 border rounded"
       />
       <button type="submit" className="w-full bg-blue-600 text-white p-2 rounded">
-        {editingTask ? 'Update Task' : 'Add Task'}
+        {editingTask ? 'Update Book' : 'Add Book'}
       </button>
     </form>
   );

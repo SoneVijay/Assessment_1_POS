@@ -9,10 +9,10 @@ res.status(500).json({ message: error.message });
 };
 
 const addTask = async (req, res) => {
-    const { title, description, deadline } = req.body;
+    const { title, author, price } = req.body;
     try {
-    const task = await Task.create({ userId: req.user.id, title, description,
-    deadline });
+    const task = await Task.create({ userId: req.user.id, title, author,
+    price });
     res.status(201).json(task);
     } catch (error) {
     res.status(500).json({ message: error.message });
@@ -20,14 +20,13 @@ const addTask = async (req, res) => {
     };
 
 const updateTask = async (req, res) => {
-    const { title, description, completed, deadline } = req.body;
+    const { title, author, price } = req.body;
     try {
         const task = await Task.findById(req.params.id);
-        if (!task) return res.status(404).json({ message: 'Task not found' });
+        if (!task) return res.status(404).json({ message: 'Book not found' });
         task.title = title || task.title;
-        task.description = description || task.description;
-        task.completed = completed ?? task.completed;
-        task.deadline = deadline || task.deadline;
+        task.author = author || task.author;
+        task.price = price || task.price;
         const updatedTask = await task.save();
         res.json(updatedTask);
     } catch (error) {
@@ -38,9 +37,9 @@ const updateTask = async (req, res) => {
 const deleteTask = async (req, res) => {
     try {
     const task = await Task.findById(req.params.id);
-    if (!task) return res.status(404).json({ message: 'Task not found' });
+    if (!task) return res.status(404).json({ message: 'Book not found' });
     await task.remove();
-    res.json({ message: 'Task deleted' });
+    res.json({ message: 'Book deleted' });
     } catch (error) {
     res.status(500).json({ message: error.message });
     }
